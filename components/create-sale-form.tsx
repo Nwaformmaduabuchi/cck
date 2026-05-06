@@ -19,6 +19,7 @@ import { createSale, formatMoney } from "@/lib/query";
 import { useSaleDraft } from "@/lib/state";
 import type { InventoryVariant } from "@/lib/types";
 
+
 const saleSchema = z.object({
   customer: z.object({
     name: z.string().min(2, "Customer name is required."),
@@ -98,6 +99,7 @@ export function CreateSaleForm({ variants }: { variants: InventoryVariant[] }) {
         const sale = await createSale(parsed.data);
         draft.resetSaleDraft();
         setMessage(`Pending sale #${sale.id} created for ${formatMoney(sale.total_price)}.`);
+        
       } catch (error) {
         setErrors([error instanceof Error ? error.message : "Could not create sale."]);
       }

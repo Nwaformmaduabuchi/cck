@@ -1,11 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL          
 
 export const createStock = async function (formdata: FormData) {
   const payload = formdata.get("payload");
 
-  const res = await fetch(`${API_BASE_URL}/stock/create/`, {
+  const res = await fetch(`${API_BASE_URL}/create/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,6 +15,6 @@ export const createStock = async function (formdata: FormData) {
     cache: "no-store",
     body: typeof payload === "string" ? payload : "{}",
   });
-
+  revalidatePath("/create")
   return res.json();
 };

@@ -17,6 +17,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { createProduct, createVariant } from "@/lib/query";
 import type { Category, Product } from "@/lib/types";
+import { revalidatePath } from "next/cache";
 
 const productSchema = z.object({
   name: z.string().min(2, "Product name is required."),
